@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Armada;
+use App\Models\Picture;
 use Illuminate\Http\Request;
 
 class ArmadaController extends Controller
@@ -28,7 +29,7 @@ class ArmadaController extends Controller
                'width' => 'required|numeric',
                'height' => 'required|numeric'
           ]);
-          Armada::create([
+          $armada = Armada::create([
                'name' => $request->name,
                'max_weight' => $request->max_weight,
                'length' => $request->length,
@@ -36,13 +37,22 @@ class ArmadaController extends Controller
                'height' => $request->height
           ]);
 
+          foreach($request->file('files') as $file) {
+               $filename = time().rand(1,200).'.'.$file->extension();
+               $file->move(public_path('uploads'),$filename);
+               Picture::create([
+                    'armada_id' => $armada->id,
+                    'filename' => $filename
+               ]);
+          }
+
           return redirect('/armadas')->with('success', 'Data Armada berhasil ditambahkan');
      }
 
      public function edit($id)
      {
-          $armadas = Armada::find($id);
-          return view('armadas.edit', compact(['armadas']));
+          $armada = Armada::find($id);
+          return view('armadas.edit', compact(['armada']));
      }
 
      public function update(Request $request, $id)
@@ -63,6 +73,16 @@ class ArmadaController extends Controller
                'width' => $request->width,
                'height' => $request->height
           ]);
+
+          foreach($request->file('files') as $file) {
+               $filename = time().rand(1,200).'.'.$file->extension();
+               $file->move(public_path('uploads'),$filename);
+               Picture::create([
+                    'armada_id' => $armada->id,
+                    'filename' => $filename
+               ]);
+          }
+
           return redirect('/armadas')->with('success', 'Data Armada berhasil diubah');
      }
 

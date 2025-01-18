@@ -9,4 +9,9 @@ class Armada extends Model
 {
     use HasFactory;
     protected $guarded = ['id'];
+
+    public function pictures()
+    {
+        return $this->hasMany(Picture::class);    
+    }
 }

@@ -17,7 +17,7 @@
                 </ul>
               </div>
           @endif
-            <form action="/armadas" method="POST">
+            <form action="/armadas" method="POST" enctype="multipart/form-data">
               @csrf
                 <div class="form-group">
                   <label for="name">Name</label>
@@ -38,6 +38,10 @@
                   <div class="form-group">
                     <label for="height">Height</label>
                     <input name="height" type="number" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Height">
+                  </div>
+                  <div class="form-group">
+                    <label for="height">Pictures</label>
+                    <input name="files[]" type="file" class="form-control" multiple id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Height">
                   </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
               </form>
