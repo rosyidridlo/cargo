@@ -22,7 +22,12 @@
               <tbody>
                 @foreach ($armadas as $armada)
                 <tr>
-                    <td>{{ $armada->name }}</td>
+                    <td>
+                      @if($armada->pictures->isNotEmpty())
+                          <img src="uploads/{{$armada->pictures->last()->filename}}" width="150" class="img-thumbnail" alt="">
+                      @endif
+                      {{ $armada->name }}
+                    </td>
                     <td>{{ $armada->max_weight }}</td>
                     <td> P {{ $armada->length }}m x L {{ $armada->width }}m x T {{ $armada->height }}m</td>
                     <td>
